@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- v-model优先级大于vlue -->
+      <input type="text" v-model="message" />
+      <input type="checkbox" name="" id="" v-model="checked" />
+      <p>{{ message }}</p>
+      <p>{{ checked }}</p>
+    </div>
+    <script>
+      /**
+       * Vue中绑定事件
+       *  指令：
+       *    是一种特殊的自定义行间属性，以V-开头
+       *    将数据和DOM做关联，当表达式的值改变时，响应式的作用在视图
+       *     预期的值是一个javascript表达式
+       *
+       *           v-bind:属性名 = “表达式”
+       *
+       *           v-on:事件名=“表达式”
+       *
+       *           v-model
+       *             在表单元素上创建数据双向绑定
+       *             会根据控件类型自动选取正确的方法来更新元素交互的值
+       *             负责监听用户输入事件以及更新数据
+       *
+       */
+
+      var message = "Hello Vue";
+      const v = new Vue({
+        el: "#app",
+        data: {
+          message,
+          checked: true
+        }
+      });
+    </script>
+  </body>
+</html>
