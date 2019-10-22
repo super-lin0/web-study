@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-on:input="inputHandle" />
+      <p v-bind:title="message">{{ message }}</p>
+    </div>
+    <script>
+      /**
+       * Vue中绑定事件
+       *  指令：
+       *    是一种特殊的自定义行间属性，以V-开头
+       *    将数据和DOM做关联，当表达式的值改变时，响应式的作用在视图
+            预期的值是一个javascript表达式
+
+            v-bind:属性名 = “表达式”
+
+            v-on:事件名=“表达式”
+       */
+
+      var message = "Hello Vue";
+      const v = new Vue({
+        el: "#app",
+        data: {
+          message
+        },
+        methods: {
+          //定义方法
+          inputHandle(e) {
+            // 方法中的this都指向当前Vue的实例
+            this.message = e.target.value;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
