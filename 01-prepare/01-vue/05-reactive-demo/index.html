@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li>{{ message }}</li>
+        <li>{{ todos.demo }}</li>
+      </ul>
+    </div>
+    <script>
+      const v = new Vue({
+        el: "#app",
+        data: {
+          /**
+           *
+           * 如果没有定义某个属性，那么不能检测属性的变化
+           *
+           *
+           *  Vue.set(target, key, value)
+           *    设置对象的属性，如果对象是响应式的，确保属性被创建后也是响应式的，同时触发视图更新，
+           *    这个方法主要用于避开Vue不能检测属性被添加的限制
+           *
+           *  Vue.$set(target, key, value)
+           *    实例上的方法
+           *
+           *  替换对象
+           *    Object.assign()
+           *
+           *  注意
+           *    对象不能是Vue实例，或者Vue的根数据对象
+           */
+          message: "Hello World",
+          todos: {}
+        }
+      });
+      // 错误示例
+      // v.demo = "test demo";
+
+      // 方法一
+      // Vue.set(v.todos, "demo", "abdhsj");
+
+      v.$set(v.todos, "demo", "sbfjdsh");
+    </script>
+  </body>
+</html>
