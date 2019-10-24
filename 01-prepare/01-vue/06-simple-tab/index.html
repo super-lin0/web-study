@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+      .red {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input
+        v-for="item, i in news"
+        type="button"
+        v-bind:title="i"
+        v-bind:value="item.title"
+        v-bind:class="{red: i === index}"
+        v-on:click="clickHandle(i)"
+      />
+
+      <ul
+        v-for="item,i in news"
+        v-bind:style="{display: index === i ? 'block': 'none'}"
+      >
+        <li v-for="subItem in item.list">{{ subItem.subTitle }}</li>
+      </ul>
+    </div>
+
+    <script>
+      const news = [
+        {
+          title: "购物",
+          list: [{ subTitle: "惊爆价" }, { subTitle: "体验价" }]
+        },
+        {
+          title: "娱乐",
+          list: [{ subTitle: "出轨" }, { subTitle: "离婚" }]
+        },
+        {
+          title: "财经",
+          list: [{ subTitle: "股票" }, { subTitle: "理财" }]
+        }
+      ];
+      new Vue({
+        el: "#app",
+        data: {
+          news,
+          index: 0
+        },
+        methods: {
+          clickHandle(i) {
+            this.index = i;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
