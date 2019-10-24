@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="button" value="发送" @click="send" />
+      <input type="button" value="发送1" @click="send1('test')" />
+      <input type="button" value="发送2" @click="send2($event, 'test')" />
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        methods: {
+          send() {
+            console.log("send");
+          },
+          send1(msg) {
+            console.log(msg);
+          },
+          send2(event, msg) {
+            console.log(event);
+            console.log(msg);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
