@@ -29,8 +29,8 @@
     <div id="app">
       <div v-for="data, key in datas" class="line">
         <h2 @click="clickHandle(key)">{{ data.title }}</h2>
-        <ul v-if="index === key">
-          <li v-for="option, selectNum in data.list">
+        <ul v-show="index === key">
+          <li v-for="option in data.list">
             {{ option }}
           </li>
         </ul>
