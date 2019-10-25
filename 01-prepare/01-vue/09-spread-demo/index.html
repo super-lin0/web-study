@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+      span {
+        margin-left: 10px;
+      }
+      .grey {
+        background-color: grey;
+      }
+      .line {
+        line-height: 40px;
+      }
+      .tip {
+        border: 2px solid red;
+        background: green;
+      }
+      .tip a {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="data, key in datas" class="line">
+        <h2 @click="clickHandle(key)">{{ data.title }}</h2>
+        <ul v-if="index === key">
+          <li v-for="option, selectNum in data.list">
+            {{ option }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      let datas = [
+        {
+          title: "品牌",
+          list: ["苹果", "三星", "华为", "OPPO", "中兴", "小米"]
+        },
+        {
+          title: "尺寸",
+          list: ["6寸", "5寸", "4寸", "6.5寸"]
+        },
+        {
+          title: "颜色",
+          list: ["红色", "黄色", "蓝色", "绿色", "青色", "黑色"]
+        },
+        {
+          title: "系统",
+          list: ["OSX", "Android"]
+        }
+      ];
+
+      new Vue({
+        el: "#app",
+        data: {
+          datas,
+          index: -1
+        },
+        methods: {
+          clickHandle(key) {
+            this.index = key === this.index ? -1 : key;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
