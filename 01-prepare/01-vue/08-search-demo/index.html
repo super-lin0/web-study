@@ -79,7 +79,10 @@
           },
           removeHandle(index) {
             this.datas[index].no = -1;
-            this.$set(this.results, index, undefined);
+            //方法一
+            // this.$set(this.results, index, undefined);
+            // 方法二
+            this.$delete(this.results, index);
           }
         }
       });
