@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>事件修饰符</title>
+    <script src="../lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input type="button" value="发送" v-on:click="send" />
+      <a href="http://www.baidu.com" @click.prevent="clickHandle">百度一下</a>
+    </div>
+
+    <script>
+      /**
+       *  事件修饰符
+       *  方法只有纯粹的数据逻辑，而不是去处理dom事件的细节
+       *
+       * 语法
+       *    @事件名.修饰符.修饰符 = "事件处理函数"
+       *
+       *    .stop、.prevent、.capture、.self、.once
+       *
+       *    按键修饰符
+       *      .enter、.tab、.delete、.esc、.space、.up、.down、.left、.right
+       *
+       *
+       */
+      new Vue({
+        el: "#app",
+        methods: {
+          send() {
+            console.log("Hello ");
+          },
+          clickHandle() {
+            // 方法一
+            // e.preventDefault();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

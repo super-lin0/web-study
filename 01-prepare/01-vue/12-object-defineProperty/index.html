@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" id="input" />
+      <input type="button" value="改变" id="btn" />
+      <div id="div"></div>
+
+      <script>
+        var data = {
+          title: "新闻",
+          list: ["歌手", "马拉松"]
+        };
+
+        var val = data.title;
+
+        var divEl = document.getElementById("div");
+        var btnEl = document.getElementById("btn");
+        var iptEl = document.getElementById("input");
+
+        Object.defineProperty(data, "title", {
+          get() {
+            return val;
+          },
+          set(newVal) {
+            val = newVal;
+            divEl.innerHTML = data.title;
+          }
+        });
+
+        divEl.innerHTML = data.title;
+        btnEl.addEventListener("click", () => {
+          data.title = "立马";
+        });
+
+        iptEl.addEventListener("input", e => {
+          data.title = e.target.value;
+        });
+      </script>
+    </div>
+  </body>
+</html>
