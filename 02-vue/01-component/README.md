@@ -123,3 +123,56 @@
 
 - 实践中可以用 Vue 来代替 Bus，因为它已经实现了相应的功能
 - Vuex: 创建唯一的全局管理者 Store，通过它管理数据并通知组件状态更新
+
+### 插槽
+
+插槽语法是 Vue 实现的内容分发 API，用于复合组件开发，该技术在通用组件库开发中有大量应用
+
+**匿名插槽**
+
+```
+  // comp1
+  <div>
+    <slot></slot>
+  </div>
+
+  // parent
+  <comp></comp>
+```
+
+**具名插槽**
+
+```
+  //  将内容分发到子组件指定的位置
+
+  // comp1
+  <div>
+    <slot name="content"></slot>
+  </div>
+
+  // parent
+  <div>
+    <template v-slot:default></template>
+    <template v-slot:content>内容....</template>
+  </div>
+
+```
+
+**作用域插槽**
+
+分发内容要用到子组件中的数据
+
+```
+
+  // comp3
+  <div>
+      <slot :foo="foo"></slot>
+  </div>
+
+  // parent
+  <Comp3>
+    <!-- 把v-slot的值指定为作用域上下文对象 -->
+    <template v-slot:default="slotProps">来自子组件数据:{{slotProps.foo}} </template>
+  </Comp3>
+
+```

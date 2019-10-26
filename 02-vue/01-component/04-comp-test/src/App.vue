@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <Commnuication />
+    <!-- 组件通信 -->
+    <!-- <Commnuication /> -->
+    <!-- 插槽 -->
+    <slots />
   </div>
 </template>
 
 <script>
-import Commnuication from "@/components/communication/index.vue";
+// import Commnuication from "@/components/communication/index.vue";
+import Slots from "@/components/slots/index.vue";
 
 export default {
   name: "app",
   components: {
-    Commnuication
+    // Commnuication,
+    Slots
   }
 };
 </script>
