@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>百度云音乐示例</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+      ul {
+        list-style: none;
+        margin-left: 50px;
+      }
+      .nav li {
+        display: inline;
+        line-height: 40px;
+        margin-left: 100px;
+      }
+      .table span,
+      .checked {
+        display: inline;
+        margin-left: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <ul class="nav">
+        <li>
+          <input type="checkbox" v-model="isCheckedAll" name="" id="" />全选
+        </li>
+        <li>歌曲</li>
+        <li>演唱</li>
+        <li>专辑</li>
+      </ul>
+      <ul class="table">
+        <li v-for="song, index in list">
+          <div class="checked">
+            <input type="checkbox" v-model="song.checked" name="" id="" />
+          </div>
+          <span>{{ song.name }}</span>
+          <span>{{ song.singer }}</span>
+          <span>{{ song.album }}</span>
+        </li>
+      </ul>
+      <div>
+        <span>一共选了{{ checkedNum }}个歌手，</span>
+        <span>一共选了{{ albumNum }}张专辑</span>
+      </div>
+    </div>
+
+    <script>
+      const list = [
+        { checked: false, name: "泡沫", singer: "邓紫棋", album: 10 },
+        {
+          checked: false,
+          name: "Fade to black",
+          singer: "Metallica",
+          album: 12
+        },
+        { checked: false, name: "泡沫", singer: "邓紫棋", album: 10 }
+      ];
+      new Vue({
+        el: "#app",
+        data: {
+          list
+        },
+        computed: {
+          isCheckedAll: {
+            get() {
+              return this.list.every(item => item.checked);
+            },
+            set(newValue) {
+              this.list.forEach(element => (element.checked = newValue));
+            }
+          },
+          checkedNum() {
+            return this.list.filter(item => item.checked).length;
+          },
+          albumNum() {
+            return this.list
+              .filter(item => item.checked)
+              .reduce((num, item) => item.album + num, 0);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
