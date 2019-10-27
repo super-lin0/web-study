@@ -3,19 +3,22 @@
     <!-- 组件通信 -->
     <!-- <Commnuication /> -->
     <!-- 插槽 -->
-    <slots />
+    <!-- <slots /> -->
+    <el-form></el-form>
   </div>
 </template>
 
 <script>
 // import Commnuication from "@/components/communication/index.vue";
-import Slots from "@/components/slots/index.vue";
+// import Slots from "@/components/slots/index.vue";
+import ElForm from "@/components/ElForm";
 
 export default {
   name: "app",
   components: {
     // Commnuication,
-    Slots
+    // Slots
+    ElForm
   }
 };
 </script>

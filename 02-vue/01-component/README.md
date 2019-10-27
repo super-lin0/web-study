@@ -35,7 +35,7 @@
   <HelloWorld ref="hw">
 
   mounted() {
-    this.$ref.hw.xx = "xxx"
+    this.$refs.hw.xx = "xxx"
   }
 
   // child
