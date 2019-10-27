@@ -176,3 +176,11 @@
   </Comp3>
 
 ```
+
+## 组件化实践
+
+### 表单
+
+- 仿照 element form 组件创建 Form、FormItem、Input
+
+- 实现弹窗组件
