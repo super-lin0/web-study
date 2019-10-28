@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-export default function create(Component, props) {
+const create = (Component, props) => {
   const Comp = Vue.extend(Component);
 
   const MyComponent = new Comp({
@@ -11,10 +11,12 @@ export default function create(Component, props) {
 
   document.body.appendChild(component.$el);
 
-  MyComponent.remove = function() {
+  MyComponent.remove = () => {
     document.body.removeChild(component.$el);
     component.$destroy();
   };
 
   return MyComponent;
-}
+};
+
+export default create;

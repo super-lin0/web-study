@@ -6,6 +6,7 @@
 
 <script>
 import Notice from "@/components/Notice.vue";
+
 export default {
   name: "app",
   methods: {
