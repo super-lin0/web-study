@@ -58,10 +58,12 @@ class MyRouter {
      */
     Vue.component("router-view", {
       functional: true,
-      render(_, { parent }) {
-        const h = parent.$createElement;
-        const router = parent.$router;
-
+      render(
+        h,
+        {
+          parent: { $router: router }
+        }
+      ) {
         const Component = router.routeMap[router.app.current].component;
         return h(Component);
       }
