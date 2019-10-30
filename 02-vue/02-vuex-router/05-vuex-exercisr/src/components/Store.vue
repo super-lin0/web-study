@@ -4,7 +4,6 @@
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
     <button @click="delaycrement">delay +</button>
-    <h1>{{$store.getters.doneTodos}}</h1>
   </div>
 </template>
 
