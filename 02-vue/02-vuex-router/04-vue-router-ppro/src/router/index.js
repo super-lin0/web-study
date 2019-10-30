@@ -7,37 +7,37 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: "<div>home</div>"
+    component: "home"
   },
   {
-    component: "<div>parent</div>",
+    component: "parent",
     path: "/parent",
     children: [
       { path: "", component: "" },
-      { path: "foo", component: "<div>foo</div>" },
-      { path: "bar", component: "<div>bar</div>" },
-      { path: "/baz", component: "<div>baz</div>" },
+      { path: "foo", component: "foo" },
+      { path: "bar", component: "bar" },
+      { path: "/baz", component: "baz" },
       {
         path: "qux/:quxId",
-        component: "<div>qux:quxId</div>",
+        component: "qux:quxId",
         children: [
           {
             path: "quux",
             name: "quux",
-            component: "<div>quux</div>"
+            component: "quux"
           },
           {
             path: "quuy",
             name: "quuy",
-            component: "<div>quuy</div>"
+            component: "quuy"
           }
         ]
       },
-      { path: "quy/:quyId", component: "<div>quy:quyId</div>" },
+      { path: "quy/:quyId", component: "quy:quyId" },
       {
         name: "zap",
         path: "zap/:zapId?",
-        component: "<div>zap</div>"
+        component: "zap"
       }
     ]
   }
