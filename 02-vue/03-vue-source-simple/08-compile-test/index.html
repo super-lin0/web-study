@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./wue.js"></script>
+    <script src="./compile.js"></script>
+    <div id="app">
+      <p>{{name}}</p>
+      <p w-text="name"></p>
+      <p>{{age}}</p>
+      <p>{{doubleAge}}</p>
+      <input type="text " w-model="name" />
+      <button @click="changeName">呵呵</button>
+      <div w-html="html"></div>
+    </div>
+    <script>
+      const app = new Wue({
+        el: "#app",
+        data: {
+          name: "zhangsan",
+          age: "12",
+          html: "<button>这是一个加按钮</button>"
+        },
+        created() {
+          console.log("开始啦");
+          setTimeout(() => {
+            this.name = "我是测试";
+          }, 2000);
+        },
+        methods: {
+          changeName() {
+            this.name = "Hello， 名字修改了";
+            this.age = 1;
+          }
+        }
+      });
+
+      app.test = "sss";
+    </script>
+  </body>
+</html>
