@@ -1,0 +1,86 @@
+class Wue {
+  constructor(options) {
+    this.$options = options;
+    this.$data = options.data;
+
+    this.observe(this.$data);
+
+    // 依赖收集
+    new Watcher(this, "test");
+    this.test;
+  }
+
+  observe(obj) {
+    if (!obj || typeof obj !== "object") return;
+
+    Object.keys(obj).forEach(key => {
+      this.defineReactive(obj, key, obj[key]);
+      this.proxyData(key);
+    });
+  }
+
+  defineReactive(obj, key, val) {
+    // 递归操作:防止data中包含对象
+    this.observe(val);
+
+    // 创建Dep实例，和key一一对应
+    const dep = new Dep();
+
+    Object.defineProperty(obj, key, {
+      get() {
+        // 依赖收集
+        Dep.target && dep.addDep(Dep.target);
+        return val;
+      },
+      set(newVal) {
+        if (val === newVal) {
+          return;
+        }
+        val = newVal;
+        console.log(`Wue: set: ${key}更新了`);
+
+        dep.notify();
+      }
+    });
+  }
+
+  proxyData(key) {
+    Object.defineProperty(this, key, {
+      get() {
+        return this.$data[key];
+      },
+      set(newVal) {
+        this.$data[key] = newVal;
+        console.log(`Wue: proxy: ${key}更新了`);
+      }
+    });
+  }
+}
+
+// 创建dep：和data中的每一个key一一对应起来，主要负责管理相关的watcher
+
+class Dep {
+  constructor() {
+    this.deps = [];
+  }
+
+  addDep(dep) {
+    this.deps.push(dep);
+  }
+
+  notify() {
+    this.deps.forEach(dep => dep.update());
+  }
+}
+
+// Watcher:负责创建data中key和更新函数的映射关系
+class Watcher {
+  constructor(vm, key) {
+    Dep.target = this; // 把当前Watcher实例附加到Dep静态属性上
+    this.vm = vm;
+    this.key = key;
+  }
+  update() {
+    console.log(`Watcher: update: ${this.key}属性更新`);
+  }
+}
