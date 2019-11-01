@@ -52,7 +52,7 @@ class Compile {
     Array.from(attrs).forEach(attr => {
       // <p w-text="name"></p>
       const name = attr.name; // w-text
-      const exp = attr.exp; //  "name"
+      const exp = attr.value; //  "name"
 
       if (this.isDerictive(name)) {
         const dir = name.substring(2); // text
