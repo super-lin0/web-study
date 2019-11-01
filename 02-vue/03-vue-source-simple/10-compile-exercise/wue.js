@@ -3,6 +3,7 @@ class Wue {
     this.$options = options;
     this.$data = options.data;
     this.$el = options.el;
+    this.$methods = options.methods;
 
     this.observe(this.$data);
 

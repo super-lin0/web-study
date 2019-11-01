@@ -13,17 +13,32 @@
       <p>{{msg}}</p>
       <p w-text="msg"></p>
       <p>{{age}}</p>
-      <p></p>
+      <p>
+        {{doubleAge}}
+      </p>
+      <input type="text" w-model="msg" />
+      <button @click="changeName">呵呵</button>
+      <div w-html="html"></div>
     </div>
     <script>
       const app = new Wue({
         el: "#app",
-        data: { msg: "Helo, 我是msg", age: 18 },
+        data: {
+          msg: "Helo, 我是msg",
+          age: 18,
+          html: "<button>这是一个按钮</button>"
+        },
         created() {
           console.log("开始啦");
           setTimeout(() => {
             this.msg = "修改之后的数据";
           }, 2000);
+        },
+        methods:{
+          changeName(){
+            this.msg = '哈喽，开课吧'
+            this.age = 1
+          }
         }
       });
     </script>

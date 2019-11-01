@@ -55,17 +55,43 @@ class Compile {
         const dir = name.substring(2);
 
         this[dir] && this[dir](node, exp);
+      } else if (this.isEvent(name)) {
+        const dir = name.substring(1);
+        this.eventHandler(node, exp, dir, this.$vm);
       }
     });
+  }
+
+  eventHandler(node, exp, dir, vm) {
+    const fn = vm.$methods[exp];
+    if (fn && dir) {
+      node.addEventListener(dir, fn.bind(vm));
+    }
   }
 
   text(node, exp) {
     this.update(node, exp, "text");
   }
 
-  isDirective(str) {
-    return str.indexOf("w-") !== -1;
+  html(node, exp) {
+    node.innerHTML = this.$vm[exp];
   }
+
+  model(node, exp) {
+    this.modelUpdate(node, this.$vm[exp]);
+
+    new Watcher(this.$vm, exp, value => {
+      this.modelUpdate(node, value);
+    });
+
+    node.addEventListener("input", e => {
+      this.$vm[exp] = e.target.value;
+    });
+  }
+
+  isDirective = str => str.startsWith("w-");
+
+  isEvent = str => str.startsWith("@");
 
   update(node, exp, dir) {
     const updateFn = this[dir + "Update"];
@@ -78,5 +104,9 @@ class Compile {
 
   textUpdate(node, value) {
     node.textContent = value;
+  }
+
+  modelUpdate(node, value) {
+    node.value = value;
   }
 }
