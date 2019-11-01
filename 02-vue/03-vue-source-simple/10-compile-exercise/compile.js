@@ -11,7 +11,8 @@ class Compile {
 
     Array.from(childNodes).forEach(node => {
       if (this.isElement(node)) {
-        console.log(`元素${node.nodeName}`);
+        // console.log(`元素${node.nodeName}`);
+        this.compileElement(node);
       } else if (this.isInter(node)) {
         this.compileText(node);
       }
@@ -36,6 +37,34 @@ class Compile {
   compileText(node) {
     // node.textContent = this.$vm[RegExp.$1];
     this.update(node, RegExp.$1, "text");
+  }
+
+  /**
+   * 编译元素
+   * @param {*} node
+   */
+  compileElement(node) {
+    const attrs = node.attributes;
+
+    Array.from(attrs).forEach(attr => {
+      const name = attr.name;
+      const exp = attr.value;
+
+      if (this.isDirective(name)) {
+        // w-text="msg"
+        const dir = name.substring(2);
+
+        this[dir] && this[dir](node, exp);
+      }
+    });
+  }
+
+  text(node, exp) {
+    this.update(node, exp, "text");
+  }
+
+  isDirective(str) {
+    return str.indexOf("w-") !== -1;
   }
 
   update(node, exp, dir) {
