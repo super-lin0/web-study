@@ -51,13 +51,13 @@ export function initMixin(Vue: Class<Component>) {
 
     // 核心代码，进行一系列初始化，初始化顺序：生命周期、事件监听、渲染、beforeCreate、注入、组件状态、提供数据，created
     vm._self = vm;
-    initLifecycle(vm); // $parent
-    initEvents(vm); // 事件监听
+    initLifecycle(vm); // $parent,$root,$children,$refs
+    initEvents(vm); // 事件监听,处理父组件传递的监听器
     initRender(vm); // 渲染相关 $slots/$scopeSlots/$createElement/_c
     callHook(vm, "beforeCreate");
-    initInjections(vm); // resolve injections before data/props
+    initInjections(vm); // resolve injections before data/props,    获取注入数据
     initState(vm); // 初始化props/methods/data/computed/watch
-    initProvide(vm); // resolve provide after data/props
+    initProvide(vm); // resolve provide after data/props，提供数据注入
     callHook(vm, "created");
 
     /* istanbul ignore if */

@@ -114,6 +114,7 @@ function initProps(vm: Component, propsOptions: Object) {
 }
 
 function initData(vm: Component) {
+  // 获取data
   let data = vm.$options.data;
   data = vm._data = typeof data === "function" ? getData(data, vm) : data || {};
   if (!isPlainObject(data)) {
@@ -126,6 +127,7 @@ function initData(vm: Component) {
       );
   }
   // proxy data on instance
+  // 代理data到实例上
   const keys = Object.keys(data);
   const props = vm.$options.props;
   const methods = vm.$options.methods;
@@ -151,7 +153,7 @@ function initData(vm: Component) {
       proxy(vm, `_data`, key);
     }
   }
-  // observe data
+  // observe data执行数据响应化
   observe(data, true /* asRootData */);
 }
 
