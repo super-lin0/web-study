@@ -138,6 +138,12 @@ export function lifecycleMixin(Vue: Class<Component>) {
   };
 }
 
+/**
+ * 渲染更新
+ * @param {*} vm
+ * @param {*} el
+ * @param {*} hydrating
+ */
 export function mountComponent(
   vm: Component,
   el: ?Element,

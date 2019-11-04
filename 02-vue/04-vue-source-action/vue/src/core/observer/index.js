@@ -49,9 +49,12 @@ export class Observer {
     if (Array.isArray(value)) {
       // 对数组进行响应化处理，arrayMethods：已经被替换过7个方法的数组原型方法
       // 将设置完拦截的数组原型设置到当前数组的对象实例上
+
+      // 如果浏览器支持原型
       if (hasProto) {
         protoAugment(value, arrayMethods);
       } else {
+        // 老旧浏览器
         copyAugment(value, arrayMethods, arrayKeys);
       }
       this.observeArray(value);
@@ -66,6 +69,7 @@ export class Observer {
    * getter/setters. This method should only be called when
    * value type is Object.
    * 定义响应化
+   * 遍历对象所有属性
    */
   walk(obj: Object) {
     const keys = Object.keys(obj);
