@@ -170,6 +170,7 @@ export default class Watcher {
     } else if (this.sync) {
       this.run();
     } else {
+      // watcher入队操作
       queueWatcher(this);
     }
   }
@@ -180,6 +181,10 @@ export default class Watcher {
    */
   run() {
     if (this.active) {
+      // 执行get获取最新值
+      // 对于组件Watcher那就是更新函数updateComponent
+      // 对于用户编写的watcher
+
       const value = this.get();
       if (
         value !== this.value ||

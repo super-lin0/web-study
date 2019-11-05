@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue源码解析</title>
+    <script src="../../dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <h1>初始化流程</h1>
+      <p id="p1">{{ foo }}</p>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#demo",
+        data: { foo: "" },
+        mounted() {
+          setInterval(() => {
+            this.foo = 1;
+            this.foo = 2;
+            this.foo = 3;
+            console.log(p1.innerHTML);
+            this.$nextTick(() => {
+              console.log(p1.innerHTML);
+            });
+          }, 1000);
+        }
+      });
+    </script>
+  </body>
+</html>
