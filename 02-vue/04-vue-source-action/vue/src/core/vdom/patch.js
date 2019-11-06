@@ -499,7 +499,7 @@ export function createPatchFunction(backend) {
         newEndVnode = newCh[--newEndIdx];
       } else if (sameVnode(oldStartVnode, newEndVnode)) {
         // Vnode moved right
-        // 老开始=新结束，打补丁两者，移动老开始到结尾
+        // 老开始=新结束，打补丁两者，移动老开始到结尾，老的开始游标向后移动，新的结束游标向前移动
         patchVnode(
           oldStartVnode,
           newEndVnode,
@@ -517,7 +517,7 @@ export function createPatchFunction(backend) {
         newEndVnode = newCh[--newEndIdx];
       } else if (sameVnode(oldEndVnode, newStartVnode)) {
         // Vnode moved left
-        // 老结束=新开始，打补丁两者，移动老结束到头部
+        // 老结束=新开始，打补丁两者，移动老结束到头部，老的结束游标向前移动，新的开始游标向后移动
         patchVnode(
           oldEndVnode,
           newStartVnode,
@@ -531,7 +531,7 @@ export function createPatchFunction(backend) {
         newStartVnode = newCh[++newStartIdx];
       } else {
         // 猜测失败，老老实实循环比较
-        // 从新开头拿一个，去老的里面查找相同节点
+        // 从老的节点里面按照key值创建一个map,从新开头拿一个，去老的里面查找相同节点
         if (isUndef(oldKeyToIdx))
           oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
         idxInOld = isDef(newStartVnode.key)
@@ -700,11 +700,11 @@ export function createPatchFunction(backend) {
         // 老的有，新的没有，删除
         removeVnodes(oldCh, 0, oldCh.length - 1);
       } else if (isDef(oldVnode.text)) {
-        // 老的有文本，清空
+        // 老的有文本，新的没有，则清空文本
         nodeOps.setTextContent(elm, "");
       }
     } else if (oldVnode.text !== vnode.text) {
-      // 两个都有文本，则修改文本
+      // 两个都有文本，且不想等，则修改文本
       nodeOps.setTextContent(elm, vnode.text);
     }
     if (isDef(data)) {

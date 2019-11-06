@@ -95,7 +95,7 @@ export function _createElement(
     children = simpleNormalizeChildren(children);
   }
   // vnode生成过程
-  // 传入的tag可能是原声的html标签，也可能是自定义组件的标签
+  // 传入的tag可能是原生的html标签，也可能是自定义组件的标签
   let vnode, ns;
   if (typeof tag === "string") {
     let Ctor;
