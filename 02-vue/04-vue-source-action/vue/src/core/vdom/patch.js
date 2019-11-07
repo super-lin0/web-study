@@ -69,12 +69,18 @@ export function createPatchFunction(backend) {
   let i, j;
   const cbs = {};
 
+  // modules是所有的节点属性的相关操作, 平台特别节点操作、属性更新对象
   const { modules, nodeOps } = backend;
 
+  // 将属性相关dom操作按hooks归类，在patchVnode时一起执行
+  // const hooks = ['create', 'activate', 'update', 'remove', 'destroy']
   for (i = 0; i < hooks.length; ++i) {
+    // 指定到cbs对象上,egg. cbs["update"] = []
     cbs[hooks[i]] = [];
     for (j = 0; j < modules.length; ++j) {
       if (isDef(modules[j][hooks[i]])) {
+        // 添加到相应数组中:
+        // cbs["update"] [updateAttrs,updateClass...]
         cbs[hooks[i]].push(modules[j][hooks[i]]);
       }
     }
@@ -677,8 +683,12 @@ export function createPatchFunction(backend) {
 
     const oldCh = oldVnode.children;
     const ch = vnode.children;
+
+    // 更新属性
     if (isDef(data) && isPatchable(vnode)) {
+      // 拿出cbs中所有update函数，并执行
       for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
+      // 用户自定义钩子
       if (isDef((i = data.hook)) && isDef((i = i.update))) i(oldVnode, vnode);
     }
 
