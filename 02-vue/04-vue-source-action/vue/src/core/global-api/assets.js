@@ -10,6 +10,8 @@ export function initAssetRegisters(Vue: GlobalAPI) {
   // ['component', 'directive', 'filter']
   ASSET_TYPES.forEach(type => {
     // Vue['component']
+    // Vue.component("comp", {template: ""})
+
     Vue[type] = function(
       id: string,
       definition: Function | Object
@@ -22,7 +24,6 @@ export function initAssetRegisters(Vue: GlobalAPI) {
           validateComponentName(id);
         }
         // component处理，指定一个name，对definition做转换，获取组件构造函数
-        // Vue.component("comp", {template: ""})
         if (type === "component" && isPlainObject(definition)) {
           definition.name = definition.name || id;
           // 转换组件配置对象为构造函数
