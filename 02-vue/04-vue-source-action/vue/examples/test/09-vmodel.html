@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue源码解析-vdom</title>
+    <script src="../../dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="demo">
+      <h1>Vue <span>双向绑定机制</span></h1>
+      <!-- 表单控件绑定 -->
+      <input v-model="foo" />
+      <!-- 自定义控件绑定 -->
+      <comp v-model="foo"></comp>
+    </div>
+    <script>
+      Vue.component("comp", {
+        template: `<input
+            type="text"
+            :value="$attrs.value"
+            @input="$emit('input', $event.target.value)"
+          />
+        `
+      });
+      const app = new Vue({
+        el: "#demo",
+        data: { foo: "foo" }
+      });
+      console.log(app.$options.render);
+    </script>
+  </body>
+</html>
