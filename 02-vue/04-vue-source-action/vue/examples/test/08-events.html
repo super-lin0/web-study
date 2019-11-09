@@ -11,19 +11,19 @@
     <div id="demo">
       <h1>Vue <span>事件处理</span></h1>
       <!-- 普通事件 -->
-      <p @click="onClick">this is p</p>
+      <!-- <p @click="onClick">this is p</p> -->
       <!-- 自定义事件 -->
-      <!-- <comp @myclick="onMyClick"></comp> -->
+      <comp @myclick="onMyClick"></comp>
     </div>
     <script>
-      // Vue.component("comp", {
-      //   template: `<div @click="onClick">I am comp</div>`,
-      //   methods: {
-      //     onClick() {
-      //       this.$emit("myclick");
-      //     }
-      //   }
-      // });
+      Vue.component("comp", {
+        template: `<div @click="onClick">I am comp</div>`,
+        methods: {
+          onClick() {
+            this.$emit("myclick");
+          }
+        }
+      });
       const app = new Vue({
         el: "#demo",
         methods: {
