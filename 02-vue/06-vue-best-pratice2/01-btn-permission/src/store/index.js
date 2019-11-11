@@ -7,5 +7,8 @@ import permission from "./modules/permission";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { user, permission }
+  modules: { user, permission },
+  getters: {
+    roles: state => state.user.roles
+  }
 });

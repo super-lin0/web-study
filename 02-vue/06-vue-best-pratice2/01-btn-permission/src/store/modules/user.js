@@ -16,7 +16,7 @@ export default {
     login({ commit }, { username }) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          if (username === "admin") {
+          if (username === "admin" || username === "tom") {
             commit("SET_TOKEN", username);
             localStorage.setItem("token", username);
             resolve();

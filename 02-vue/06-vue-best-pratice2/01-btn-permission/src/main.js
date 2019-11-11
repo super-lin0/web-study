@@ -5,7 +5,10 @@ import store from "./store";
 
 import "./permission";
 
+import vp from "./directive/permission";
+
 Vue.config.productionTip = false;
+Vue.directive("permission", vp);
 
 new Vue({
   router,
