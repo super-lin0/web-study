@@ -5,12 +5,12 @@
       <svg-icon v-if="hasIcon" :icon-class="model.meta.icon"></svg-icon>
       <span v-if="isFolder">
         <!-- 3.设置标题才显示 -->
-        <span v-if="hasTitle">{{model.meta.title}}</span>
-        [{{open ? '-' : '+'}}]
+        <span v-if="hasTitle">{{ model.meta.title }}</span>
+        [{{ open ? "-" : "+" }}]
       </span>
       <!-- 4.如果是叶子节点，显示为链接 -->
       <template v-else>
-        <router-link :to="resolvePath(model.path)">{{title}}</router-link>
+        <router-link :to="resolvePath(model.path)">{{ title }}</router-link>
       </template>
     </div>
 
