@@ -9,7 +9,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: { user, permission },
   getters: {
-    roles: state => state.user.roles,
-    permission_routes: state => state.permission.routes
+    roles: state => state.user.roles
   }
 });

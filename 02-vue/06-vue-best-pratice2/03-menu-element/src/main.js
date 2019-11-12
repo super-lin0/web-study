@@ -5,7 +5,6 @@ import store from "./store";
 
 import "./permission";
 import "./icons";
-import "./plugins/element.js";
 
 import vp from "./directive/permission";
 import "./plugins/element.js";

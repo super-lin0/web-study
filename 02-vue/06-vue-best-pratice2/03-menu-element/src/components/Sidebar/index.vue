@@ -11,7 +11,7 @@
         mode="vertical"
       >
         <sidebar-item
-          v-for="route in permission_routes"
+          v-for="route in $store.state.permission.routes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -22,15 +22,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import SidebarItem from "./SidebarItem";
+
 export default {
   components: { SidebarItem },
   computed: {
-    ...mapGetters(["permission_routes"]),
     activeMenu() {
       const route = this.$route;
-      const { meta, path } = route; // 默认激活项
+      const { meta, path } = route;
+      // 默认激活项
       if (meta.activeMenu) {
         return meta.activeMenu;
       }
