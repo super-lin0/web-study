@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
-    <side-menu></side-menu>
-    <sidebar />
+    <!-- <side-menu></side-menu> -->
+    <sidebar class="sidebar-container" />
     <div class="main-container">
       <router-view></router-view>
     </div>
@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import SideMenu from "@/components/Sidemenu";
+// import SideMenu from "@/components/Sidemenu";
 import Sidebar from "@/components/Sidebar";
 
 export default {
   components: {
-    Sidebar,
-    SideMenu
+    Sidebar
+    // SideMenu
   }
 };
 </script>
