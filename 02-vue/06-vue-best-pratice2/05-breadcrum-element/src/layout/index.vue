@@ -3,6 +3,7 @@
     <!-- <side-menu></side-menu> -->
     <sidebar class="sidebar-container" />
     <div class="main-container">
+      <breadcrumb></breadcrumb>
       <router-view></router-view>
     </div>
   </div>
@@ -11,11 +12,12 @@
 <script>
 // import SideMenu from "@/components/Sidemenu";
 import Sidebar from "@/components/Sidebar";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default {
   components: {
-    Sidebar
-    // SideMenu
+    Sidebar,
+    Breadcrumb
   }
 };
 </script>
