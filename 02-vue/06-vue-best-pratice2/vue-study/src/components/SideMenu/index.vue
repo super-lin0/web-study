@@ -1,13 +1,11 @@
 <template>
   <div id="app">
     <ul>
-      <item
-        class="item"
+      <item class="item" 
         v-for="route in $store.state.permission.routes"
-        :key="route.path"
         :model="route"
-        :base-path="route.path"
-      ></item>
+        :key="route.path"
+        :base-path="route.path"></item>
     </ul>
   </div>
 </template>
