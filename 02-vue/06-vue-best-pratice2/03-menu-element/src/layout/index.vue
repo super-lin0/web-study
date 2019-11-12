@@ -19,3 +19,17 @@ export default {
   }
 };
 </script>
+
+<style>
+.app-wrapper {
+  display: flex;
+}
+.sidebar-container {
+  width: 20vw;
+  height: 100vh;
+}
+.main-container {
+  width: 80vw;
+  height: 100vh;
+}
+</style>
