@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 
 import "./permission";
+import "./icons";
 
 import vp from "./directive/permission";
 

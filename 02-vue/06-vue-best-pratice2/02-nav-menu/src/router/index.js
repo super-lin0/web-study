@@ -44,7 +44,7 @@ export const asyncRoutes = [
         name: "about",
         meta: {
           title: "About",
-          icon: "qq",
+          icon: "wx",
           roles: ["admin", "editor"]
         }
       }
