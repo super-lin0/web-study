@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
       // 代理 /dev-api/user/login 到 http://127.0.0.1:3000/user/login
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://yapi.demo.qunar.com/mock/34166/best-pratice/`,
+        target: process.env.VUE_APP_MOCK_API,
         changeOrigin: true,
         pathRewrite: {
           ["^" + process.env.VUE_APP_BASE_API]: ""
