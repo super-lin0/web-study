@@ -30,7 +30,6 @@ const renderer = createBundleRenderer(bundle, {
 });
 
 // 路由是通配符，表示所有url都接受
-
 app.get("*", async (req, res) => {
   console.log(req.url);
 
