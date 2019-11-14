@@ -4,6 +4,7 @@ import App from "./App.vue";
 import { createRouter } from "./router";
 import { createStore } from "./store";
 
+// 确保客户端每个组件如果有asyncData，要执行之
 Vue.mixin({
   beforeMount() {
     const { asyncData } = this.$options;
@@ -30,8 +31,8 @@ export function createApp(context) {
   // 创建Vue实例
   const app = new Vue({
     router,
-    store,
     context,
+    store,
     render: h => h(App)
   });
   return { app, router, store };
