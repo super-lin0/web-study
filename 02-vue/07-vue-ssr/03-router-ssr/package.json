@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build:client": "vue-cli-service build",
     "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build --mode server",
-    "build": "yarn build:server && yarn build:client",
+    "build": "npm run build:server && npm run build:client",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -17,9 +17,9 @@
     "vue-server-renderer": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.0",
-    "@vue/cli-plugin-eslint": "^4.0.0",
-    "@vue/cli-service": "^4.0.0",
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-service": "^3.2.0",
     "babel-eslint": "^10.0.3",
     "cross-env": "^6.0.3",
     "eslint": "^5.16.0",
