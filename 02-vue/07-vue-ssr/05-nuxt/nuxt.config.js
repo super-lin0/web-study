@@ -19,7 +19,6 @@ module.exports = {
   // 生成路由配置
   router: {
     /**
-     *
      * @param {*} routes 生成的路由表
      * @param {*} resolve
      */
