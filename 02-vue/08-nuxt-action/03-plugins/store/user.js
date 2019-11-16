@@ -15,9 +15,9 @@ export const getters = {
 };
 
 export const actions = {
-  login({ commit, getters }, u) {
+  login({ commit, getters }, user) {
     // this.$axios由@nuxtjs/axios提供
-    return this.$axios.$post("/api/login", u).then(({ token }) => {
+    return this.$login(user).then(({ token }) => {
       if (token) {
         commit("init", token);
       }

@@ -27,7 +27,11 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["@/plugins/element-ui"],
+  plugins: [
+    "@/plugins/element-ui",
+    "@/plugins/api-inject",
+    "@/plugins/interceptor"
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -35,7 +39,7 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "cookie-universal-nuxt"],
   axios: {
     proxy: true
   },
