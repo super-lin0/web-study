@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Watch</title>
+  <script src="../packages/vue/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    const {createApp, reactive, toRefs, watch} = Vue;
+
+    const App = {
+      template: `<div @click="onClick">msg:{{message}}</div>`,
+      setup() {
+        // // ref返回包装对象
+        const state = reactive({
+          message: "Hello Vue3",
+        });
+
+        onClick = () => {
+          // 包装对象要修改其value
+          state.message = "事件点击响应化"
+        }
+
+        // 参数1是监控表达式创建函数，其他的雷同
+        watch(() => state.message, (val, oldVal) => {
+            console.log(`message变了，新值是:${val}`) 
+        });
+
+        // 返回上下文
+        // 指定包装对象到上下文，模板中可以直接用
+        return {...toRefs(state), onClick}
+      }
+    }
+    // 初始化略有不同
+    createApp().mount(App, "#app")
+  </script>
+</body>
+</html>

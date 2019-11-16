@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hello Vue3</title>
+  <script src="../packages/vue/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    const App = {
+      template: "<div>{{message}}</div>",
+      data: {
+        message: "Hello Vue3"
+      }
+    }
+    // 初始化略有不同
+    Vue.createApp().mount(App, "#app")
+  </script>
+</body>
+</html>

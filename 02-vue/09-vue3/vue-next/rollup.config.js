@@ -74,6 +74,8 @@ export default packageConfigs
 function createConfig(output, plugins = []) {
   output.externalLiveBindings = false
 
+  output.sourcemap = true
+
   const isProductionBuild =
     process.env.__DEV__ === 'false' || /\.prod\.js$/.test(output.file)
   const isGlobalBuild = /\.global(\.prod)?\.js$/.test(output.file)

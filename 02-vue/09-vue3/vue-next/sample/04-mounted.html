@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hello Vue3</title>
+  <script src="../packages/vue/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    const {createApp, onMounted, reactive} = Vue;
+
+    const App = {
+      template: `<div>{{state.message}}</div>`,
+      setup(props,context) {
+
+        onMounted(() => { console.log('App挂载!')});
+
+        console.log("props", props);  // 组件参数
+        console.log("context", context);  // 上下文对象
+        
+        // 响应化
+        const state = reactive({message: "Hello Vue3"});
+
+        // 返回上下文
+        return {state}
+      }
+    }
+    // 初始化略有不同
+    createApp().mount(App, "#app")
+  </script>
+</body>
+</html>
