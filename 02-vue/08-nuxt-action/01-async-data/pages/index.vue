@@ -26,6 +26,7 @@ export default {
   //   };
   // },
   async asyncData({ $axios, error }) {
+    // 注意：这里不能使用this,因为此刻组件实例还没有创建
     // $axios由nuxtjs/axios模块注入
     // $get是axios模块封装的类fetch风格的API
     const { ok, goods } = await $axios.$get("/api/goods");
