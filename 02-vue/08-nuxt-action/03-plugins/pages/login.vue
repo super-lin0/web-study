@@ -1,9 +1,17 @@
 <template>
-  <div>
-    <h1>登录</h1>
-    <input v-model="user.username" />
-    <input type="password" v-model="user.password" />
-    <button @click="login">登录</button>
+  <div class="container">
+    <h2>登录</h2>
+    <el-form label-width="100px">
+      <el-form-item label="用户名">
+        <el-input v-model="user.username"></el-input>
+      </el-form-item>
+      <el-form-item label="密码">
+        <el-input type="password" v-model="user.password"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="login">提交</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -33,4 +41,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  flex-direction: column;
+}
+</style>
