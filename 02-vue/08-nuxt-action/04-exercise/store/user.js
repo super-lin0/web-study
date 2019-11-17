@@ -16,7 +16,7 @@ export const getters = {
 
 export const actions = {
   login({ commit, getters }, user) {
-    return this.$axios.$post("/api/login", user).then(({ token }) => {
+    return this.$login(user).then(({ token }) => {
       if (token) {
         commit("INIT", token);
       }
