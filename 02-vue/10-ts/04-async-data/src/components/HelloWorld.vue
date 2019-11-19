@@ -16,6 +16,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+
 import Feature from "@/models/feature";
 import { getFeatures } from "@/api/feature";
 
@@ -23,7 +24,7 @@ import { getFeatures } from "@/api/feature";
 export default class HelloWorld extends Vue {
   // 声明属性就会作为data
   @Prop({ type: String, required: true })
-  private features: Feature[] = [{ id: 1, name: "类型注解", version: "1.0" }];
+  private features: Feature[] = [];
 
   get total() {
     return this.features.length;
