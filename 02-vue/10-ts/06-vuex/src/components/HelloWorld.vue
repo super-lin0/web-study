@@ -10,29 +10,30 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Message from "@/model/Message";
+
+import { State, Getter, Action, Mutation, namespace } from "vuex-class";
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
-  $store: any;
+  @Action("todo/list") getList;
+  @Action("todo/add") addTodo;
+  @Action("todo/delete") deleteTodo;
 
   private todo: string = "";
 
-  messages: Message[] = [];
-
   mounted() {
-    this.$store.dispatch("todo/list");
+    this.getList();
   }
 
   addMsg(): void {
-    this.$store.dispatch("todo/add", { todo: this.todo });
+    this.addTodo({ todo: this.todo });
     this.todo = "";
   }
 
   deleteMsg(id: number): void {
-    this.$store.dispatch("todo/delete", { id });
+    this.deleteTodo({ id });
   }
 }
 </script>
