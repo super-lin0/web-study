@@ -22,6 +22,7 @@ import { getFeatures } from "@/api/feature";
 @Component
 export default class HelloWorld extends Vue {
   // 声明属性就会作为data
+  @Prop({ type: String, required: true })
   private features: Feature[] = [{ id: 1, name: "类型注解", version: "1.0" }];
 
   get total() {
