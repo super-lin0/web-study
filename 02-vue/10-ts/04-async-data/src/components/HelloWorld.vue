@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import Feature from "@/models/feature";
-import { getFeatures } from "@api/feature";
+import { getFeatures } from "@/api/feature";
 
 @Component
 export default class HelloWorld extends Vue {
@@ -42,6 +42,9 @@ export default class HelloWorld extends Vue {
   // 生命周期钩子
   mounted() {
     // 获取数据
+    getFeatures().then(res => {
+      this.features = res.data;
+    });
   }
 }
 </script>
