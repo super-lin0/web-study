@@ -16,19 +16,14 @@ import Message from "@/model/Message";
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
+  $store: any;
+
   private todo: string = "";
 
   messages: Message[] = [];
 
   mounted() {
-    this.$store
-      .dispatch("todo/list")
-      .then(res => {
-        this.messages = res;
-      })
-      .catch(_ => {
-        alert("出错了");
-      });
+    this.$store.dispatch("todo/list");
   }
 
   addMsg(): void {
