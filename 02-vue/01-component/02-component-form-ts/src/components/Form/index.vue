@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Model } from "vue-property-decorator";
+
 import KInput from "@/components/Form/KInput.vue";
 import KFormItem from "@/components/Form/KFormItem.vue";
 import KForm from "@/components/Form/KForm.vue";
@@ -38,8 +39,8 @@ export default class FormTest extends Vue {
   };
 
   onLogin() {
-    this.$refs.loginForm.validate(isValidate => {
-      if (isValidate) {
+    this.$refs.loginForm.validate(isValid => {
+      if (isValid) {
         alert("登录成功");
       } else {
         alert("校验失败");
