@@ -14,6 +14,16 @@ export default class KForm extends Vue {
 
   @Prop({ required: true }) private user: User;
   @Prop() private rules: object;
+
+  validate(cb) {
+    const tasks = this.$children
+      .filter(item => !!item.prop)
+      .map(item => item.validate());
+
+    Promise.all(tasks)
+      .then(() => cb(true))
+      .catch(() => cb(false));
+  }
 }
 </script>
 
