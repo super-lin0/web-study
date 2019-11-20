@@ -1,15 +1,19 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Provide } from "vue-property-decorator";
+import User from "@/models/user";
 
 @Component
-export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+export default class KForm extends Vue {
+  @Provide() form = this;
+
+  @Prop({ required: true }) private user: User;
+  @Prop() private rules: object;
 }
 </script>
 
