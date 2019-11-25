@@ -20,3 +20,6 @@
 .App-link {
   color: #09d3ac;
 }
+.border {
+  border: 1px solid red;
+}
