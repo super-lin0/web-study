@@ -8,11 +8,8 @@ class GrandChildPage extends Component {
 
     return (
       <div>
-        {/* <Consumer>
-          {ctx => <>{ctx && <div>grandchildpage-{ctx.user.name}</div>}</>}
-        </Consumer> */}
-        {/* {this.props.user.name} */}
         <HandleConsumer />
+        <GrandChildPageTest />
       </div>
     );
   }
@@ -20,6 +17,13 @@ class GrandChildPage extends Component {
 
 function handleChild(props) {
   return <div>grandchildpage-{props.user.name}</div>;
+}
+
+@handleConsumer
+class GrandChildPageTest extends Component {
+  render() {
+    return <div>GrandChildPageTest-{this.props.user.name}</div>;
+  }
 }
 
 export default GrandChildPage;
