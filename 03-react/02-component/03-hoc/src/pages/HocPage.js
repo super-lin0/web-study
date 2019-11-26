@@ -18,7 +18,7 @@ const fooHost = cmp => {
   return <cmp.type {...cmp.props} className="border"></cmp.type>;
 };
 
-// @foo
+@foo
 class Child extends Component {
   render() {
     return <div>child-{this.props.name}</div>;
@@ -31,8 +31,9 @@ class HocPage extends Component {
     return (
       <div>
         <h3>HocPage</h3>
-        <Foo name="msg" />
-        {fooHost(<div>omg</div>)}
+        <Child name="hello" />
+        {/* <Foo name="msg" /> */}
+        {/* {fooHost(<div>omg</div>)} */}
       </div>
     );
   }

@@ -6,8 +6,8 @@ import HocPage from "./pages/HocPage";
 function App() {
   return (
     <div className="App">
-      <HomePage />
-      {/* <HocPage /> */}
+      {/* <HomePage /> */}
+      <HocPage />
     </div>
   );
 }
