@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import { Consumer } from "../AppContext";
+import { handleConsumer } from "../AppContext";
 
+@handleConsumer
 class TopBar extends Component {
   render() {
-    return (
-      <div className="border">
-        <Consumer>
-          {ctx => <>{ctx && <div>TopBar-{ctx.user.name}</div>}</>}
-        </Consumer>
-      </div>
-    );
+    return <div className="border">top-bar{this.props.user.name}</div>;
   }
 }
 

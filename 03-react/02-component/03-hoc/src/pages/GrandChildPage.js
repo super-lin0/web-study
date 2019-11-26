@@ -4,11 +4,13 @@ import { handleConsumer } from "../AppContext";
 class GrandChildPage extends Component {
   render() {
     console.log("grandchildpage", this.props);
+    // 方法一：函数组件
     const HandleConsumer = handleConsumer(handleChild);
 
     return (
       <div>
         <HandleConsumer />
+        {/* 方法二：类组件 */}
         <GrandChildPageTest />
       </div>
     );
@@ -16,13 +18,13 @@ class GrandChildPage extends Component {
 }
 
 function handleChild(props) {
-  return <div>grandchildpage-{props.user.name}</div>;
+  return <div>grandchildpageFunc-{props.user.name}</div>;
 }
 
 @handleConsumer
 class GrandChildPageTest extends Component {
   render() {
-    return <div>GrandChildPageTest-{this.props.user.name}</div>;
+    return <div>GrandChildPageClass-{this.props.user.name}</div>;
   }
 }
 
