@@ -17,12 +17,12 @@ function App() {
   return (
     <div className="App">
       {/* <HookPage /> */}
-      {/* <HookPagePro /> */}
+      <HookPagePro />
       {/* <FruitList /> */}
-      <ReducerPage />
+      {/* <ReducerPage />
       <Provider value={store}>
         <UseContext />
-      </Provider>
+      </Provider> */}
     </div>
   );
 }

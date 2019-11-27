@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 const HookPageUseClock = () => {
-  const [counter, setCounter] = useState(0);
-
+  const [date, counter, setCounter] = useClock();
   return (
     <div>
-      <p>{useClock().toLocaleTimeString()}</p>
+      <p>{date.toLocaleTimeString()}</p>
       <p>{counter}</p>
       <button onClick={() => setCounter(counter + 1)}>+</button>
     </div>
@@ -13,8 +12,9 @@ const HookPageUseClock = () => {
 };
 
 // 自定义hook,一定要使用use开头
-function useClock(params) {
+function useClock() {
   const [date, setDate] = useState(new Date());
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,7 +24,7 @@ function useClock(params) {
     return () => clearInterval(timer);
   }, []);
 
-  return date;
+  return [date, counter, setCounter];
 }
 
 export default HookPageUseClock;
