@@ -15,6 +15,8 @@ class ReduxPage extends Component {
   };
 
   render() {
+    console.log("store:", store);
+
     return (
       <div>
         <p>{store.getState()}</p>
