@@ -26,6 +26,7 @@ const WFormCreate = Comp => {
 
     _validate = (field, value) => {
       const rules = this.options[field].rules;
+      let stateErr = "";
 
       const schema = new Schema({
         [field]: rules
@@ -38,22 +39,19 @@ const WFormCreate = Comp => {
         },
         errors => {
           if (errors) {
-            this.setState({
-              errors: {
-                ...this.state.errors,
-                [field]: errors[0].message
-              }
-            });
+            stateErr = errors[0].message;
           } else {
-            this.setState({
-              errors: {
-                ...this.state.errors,
-                [field]: ""
-              }
-            });
+            stateErr = "";
           }
         }
       );
+
+      this.setState({
+        errors: {
+          ...this.state.errors,
+          [field]: stateErr
+        }
+      });
     };
 
     getFieldDecorator = (field, options) => InputCmp => {

@@ -36,9 +36,11 @@ class MyForm extends Component {
     return (
       <>
         {getFieldDecorator("name", { rules: [nameRules] })(<input />)}
+        <br />
         {getFieldDecorator("password", { rules: [pwdRules] })(
           <input type="password" />
         )}
+        <br />
         <button onClick={this.submit}>提交</button>
       </>
     );
