@@ -7,7 +7,7 @@ import MyForm from "./pages/MyForm";
 function App() {
   return (
     <div className="App">
-      {/* <AntdForm /> */}
+      <AntdForm />
       <MyForm />
     </div>
   );

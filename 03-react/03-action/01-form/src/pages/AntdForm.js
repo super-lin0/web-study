@@ -22,6 +22,8 @@ class AntdForm extends Component {
 
     validateFields((err, values) => {
       if (err) {
+        console.log("antd-form err:", err);
+
         return;
       } else {
         console.log(values);
