@@ -5,39 +5,87 @@ const WFormCreate = Comp => {
   return class WForm extends Component {
     constructor(props) {
       super(props);
-      this.state = {};
+      this.state = {
+        reducer: {},
+        errors: {}
+      };
       this.options = {};
     }
 
     setChange = event => {
+      const { name, value } = event.target;
       this.setState({
-        ...this.state,
-        [event.target.name]: event.target.value
+        reducer: {
+          ...this.state.reducer,
+          [name]: value
+        }
       });
+
+      this._validate(name, value);
+    };
+
+    _validate = (field, value) => {
+      const rules = this.options[field].rules;
+
+      const schema = new Schema({
+        [field]: rules
+      });
+
+      // 2、用该实例执行校验
+      schema.validate(
+        {
+          [field]: value
+        },
+        errors => {
+          if (errors) {
+            this.setState({
+              errors: {
+                ...this.state.errors,
+                [field]: errors[0].message
+              }
+            });
+          } else {
+            this.setState({
+              errors: {
+                ...this.state.errors,
+                [field]: ""
+              }
+            });
+          }
+        }
+      );
     };
 
     getFieldDecorator = (field, options) => InputCmp => {
       this.options[field] = options;
-      return React.cloneElement(InputCmp, {
-        name: field,
-        value: this.state[field] || "",
-        onChange: this.setChange
-      });
+      return (
+        <>
+          {React.cloneElement(InputCmp, {
+            name: field,
+            value: this.state.reducer[field] || "",
+            onChange: this.setChange
+          })}
+          {this.state.errors[field] && (
+            <span style={{ color: "red" }}>{this.state.errors[field]}</span>
+          )}
+        </>
+      );
     };
 
     getFieldsValue = () => {
-      return this.state;
+      return this.state.reducer;
     };
 
     getFieldValue = name => {
-      return this.state[name];
+      return this.state.reducer[name];
     };
 
     validateFields = callback => {
       const error = {};
+      const stateErr = {};
       Object.keys(this.options).forEach(field => {
         const rules = this.options[field].rules;
-        const value = this.state[field];
+        const value = this.state.reducer[field];
 
         const schema = new Schema({
           [field]: rules
@@ -48,12 +96,20 @@ const WFormCreate = Comp => {
           {
             [field]: value
           },
-          errors => {
-            if (errors) {
-              error[field] = { errors };
+          err => {
+            if (err) {
+              error[field] = { errors: err };
+              stateErr[field] = err[0].message;
             }
           }
         );
+      });
+
+      this.setState({
+        errors: {
+          ...this.state.errors,
+          ...stateErr
+        }
       });
 
       return callback(JSON.stringify(error) === "{}" ? null : error, {
