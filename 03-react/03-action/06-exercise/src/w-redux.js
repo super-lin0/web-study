@@ -14,6 +14,11 @@ export function createStore(reducer, enhancer) {
 
   const subscribe = listener => {
     listeners.push(listener);
+
+    // 返回一个取消订阅的函数
+    return function unSubscript() {
+      listeners = listeners.filter(item => item !== listener);
+    };
   };
 
   dispatch({ type: "INIT" });
