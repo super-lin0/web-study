@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { connect } from "../ReactRedux";
 import counterAction from "./actions/counter";
 
 class HomePage extends Component {
@@ -18,4 +19,6 @@ class HomePage extends Component {
   }
 }
 
-export default connect(({ counter }) => ({ counter }), counterAction)(HomePage);
+export default connect(({ counter }) => {
+  return { counter };
+}, counterAction)(HomePage);
