@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 class PrivatePage extends Component {
   render() {
-    const { isLogin, login, path, component } = this.props;
+    const { isLogin, path, component } = this.props;
 
     if (isLogin) {
       return <Route path={path} component={component} />;
