@@ -13,9 +13,9 @@ class Counter extends Component {
   };
 
   addAsync = () => {
-    store.dispatch(() => {
+    store.dispatch(dispatch => {
       setTimeout(() => {
-        store.dispatch({ type: "add" });
+        dispatch({ type: "add" });
       }, 1000);
     });
   };
