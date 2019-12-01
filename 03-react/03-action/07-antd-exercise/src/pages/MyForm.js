@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import myFormCreators from "../components/MFormCreators";
+import MModal from "../components/MModal";
 
 const nameRules = {
   required: true,
@@ -13,6 +14,13 @@ const pwdRules = {
 
 @myFormCreators
 class MyForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    };
+  }
+
   submit = () => {
     const { getFieldsValue, getFieldValue, validateFields } = this.props;
     validateFields((err, values) => {
@@ -25,10 +33,15 @@ class MyForm extends Component {
       console.log("getFieldValue:", getFieldValue("name"));
     });
   };
+
+  send = () => {
+    this.setState({ visible: !this.state.visible });
+  };
   render() {
     console.log("MyForm", this.porps);
 
     const { getFieldDecorator } = this.props;
+    const { visible } = this.state;
 
     return (
       <div>
@@ -39,6 +52,8 @@ class MyForm extends Component {
           <input type="password" />
         )}
         <button onClick={this.submit}>登录</button>
+        <button onClick={this.send}>发送</button>
+        {visible && <MModal />}
       </div>
     );
   }
