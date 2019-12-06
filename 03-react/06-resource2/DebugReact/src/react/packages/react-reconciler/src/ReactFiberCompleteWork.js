@@ -128,7 +128,6 @@ import {
 import {createFundamentalStateInstance} from './ReactFiberFundamental';
 import {Never} from './ReactFiberExpirationTime';
 import {resetChildFibers} from './ReactChildFiber';
-import {updateEventListeners} from './ReactFiberEvents';
 import {createScopeMethods} from './ReactFiberScope';
 
 function markUpdate(workInProgress: Fiber) {
@@ -686,8 +685,8 @@ function completeWork(
         );
 
         if (enableFlareAPI) {
-          const prevListeners = current.memoizedProps.listeners;
-          const nextListeners = newProps.listeners;
+          const prevListeners = current.memoizedProps.DEPRECATED_flareListeners;
+          const nextListeners = newProps.DEPRECATED_flareListeners;
           if (prevListeners !== nextListeners) {
             markUpdate(workInProgress);
           }
@@ -728,13 +727,9 @@ function completeWork(
             markUpdate(workInProgress);
           }
           if (enableFlareAPI) {
-            const listeners = newProps.listeners;
+            const listeners = newProps.DEPRECATED_flareListeners;
             if (listeners != null) {
-              updateEventListeners(
-                listeners,
-                workInProgress,
-                rootContainerInstance,
-              );
+              markUpdate(workInProgress);
             }
           }
         } else {
@@ -752,13 +747,9 @@ function completeWork(
           workInProgress.stateNode = instance;
 
           if (enableFlareAPI) {
-            const listeners = newProps.listeners;
+            const listeners = newProps.DEPRECATED_flareListeners;
             if (listeners != null) {
-              updateEventListeners(
-                listeners,
-                workInProgress,
-                rootContainerInstance,
-              );
+              markUpdate(workInProgress);
             }
           }
 
@@ -1114,7 +1105,10 @@ function completeWork(
               return null;
             }
           } else if (
-            now() > renderState.tailExpiration &&
+            // The time it took to render last row is greater than time until
+            // the expiration.
+            now() * 2 - renderState.renderingStartTime >
+              renderState.tailExpiration &&
             renderExpirationTime > Never
           ) {
             // We have now passed our CPU deadline and we'll just give up further
@@ -1164,12 +1158,19 @@ function completeWork(
           // until we just give up and show what we have so far.
           const TAIL_EXPIRATION_TIMEOUT_MS = 500;
           renderState.tailExpiration = now() + TAIL_EXPIRATION_TIMEOUT_MS;
+          // TODO: This is meant to mimic the train model or JND but this
+          // is a per component value. It should really be since the start
+          // of the total render or last commit. Consider using something like
+          // globalMostRecentFallbackTime. That doesn't account for being
+          // suspended for part of the time or when it's a new render.
+          // It should probably use a global start time value instead.
         }
         // Pop a row.
         let next = renderState.tail;
         renderState.rendering = next;
         renderState.tail = next.sibling;
         renderState.lastEffect = workInProgress.lastEffect;
+        renderState.renderingStartTime = now();
         next.sibling = null;
 
         // Restore the context.
@@ -1252,14 +1253,9 @@ function completeWork(
           workInProgress.stateNode = scopeInstance;
           scopeInstance.methods = createScopeMethods(type, scopeInstance);
           if (enableFlareAPI) {
-            const listeners = newProps.listeners;
+            const listeners = newProps.DEPRECATED_flareListeners;
             if (listeners != null) {
-              const rootContainerInstance = getRootHostContainer();
-              updateEventListeners(
-                listeners,
-                workInProgress,
-                rootContainerInstance,
-              );
+              markUpdate(workInProgress);
             }
           }
           if (workInProgress.ref !== null) {
@@ -1268,8 +1264,9 @@ function completeWork(
           }
         } else {
           if (enableFlareAPI) {
-            const prevListeners = current.memoizedProps.listeners;
-            const nextListeners = newProps.listeners;
+            const prevListeners =
+              current.memoizedProps.DEPRECATED_flareListeners;
+            const nextListeners = newProps.DEPRECATED_flareListeners;
             if (
               prevListeners !== nextListeners ||
               workInProgress.ref !== null
