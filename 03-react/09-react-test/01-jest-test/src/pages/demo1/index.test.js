@@ -1,9 +1,7 @@
-function add(num1, num2) {
-  return num1 + num2;
-}
+import { add } from "./index";
 
 // 测试套件 test suite
-describe("hello", () => {
+describe("函数测试", () => {
   // 测试用例 test case
   it("测试add函数", () => {
     // 断言 assert
