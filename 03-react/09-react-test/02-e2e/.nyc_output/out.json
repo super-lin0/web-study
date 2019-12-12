@@ -351,7 +351,7 @@
           "column": 2
         },
         "end": {
-          "line": 10,
+          "line": 11,
           "column": 4
         }
       }
@@ -375,7 +375,7 @@
             "column": 15
           },
           "end": {
-            "line": 11,
+            "line": 12,
             "column": 1
           }
         },
@@ -391,7 +391,7 @@
     },
     "b": {},
     "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
-    "hash": "62367db86ee8354978939a5fd4ec3acb1baae7a0"
+    "hash": "3c5f9246f3f7d60609dcd91c865d7b208a7ecc1f"
   },
   "/Users/wulin/Documents/projects/web-study/03-react/09-react-test/02-e2e/src/index.js": {
     "path": "/Users/wulin/Documents/projects/web-study/03-react/09-react-test/02-e2e/src/index.js",
