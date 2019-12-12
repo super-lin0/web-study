@@ -1,0 +1,23 @@
+{
+  "name": "wue-auto-router-cli",
+  "version": "1.0.2",
+  "description": "基于vue-cli脚手架实现的自动加载路由功能，类似于nuxt功能",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "kkb": "./bin/bin"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "download-git-repo": "^3.0.2",
+    "handlebars": "^4.5.3",
+    "log-symbols": "^3.0.0",
+    "ora": "^4.0.3"
+  }
+}
