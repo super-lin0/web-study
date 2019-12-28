@@ -1,0 +1,25 @@
+const express = require("express");
+const app = express();
+const path = require("path");
+const mongo = require("./models/db");
+// const testdata = require("./initData")
+
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("./index.html"));
+});
+
+app.get("/api/list", async (req, res) => {
+  // 分页查询
+  const { page } = req.query;
+  const col = mongo.col("fruits");
+  const total = await col.find().count();
+  const fruits = await col
+    .find()
+    .skip((page - 1) * 10)
+    .limit(10)
+    .toArray();
+
+  res.json({ ok: 1, data: { fruits, pagination: { total, page } } });
+});
+
+app.listen(3000, () => console.log("服务器启动，端口3000"));
