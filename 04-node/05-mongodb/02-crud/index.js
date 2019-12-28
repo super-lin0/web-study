@@ -22,4 +22,11 @@ app.get("/api/list", async (req, res) => {
   res.json({ ok: 1, data: { fruits, pagination: { total, page } } });
 });
 
+app.get("/api/category", async (req, res) => {
+  const col = mongo.col("fruits");
+
+  const data = await col.distinct("category");
+  res.json({ ok: 1, data });
+});
+
 app.listen(3000, () => console.log("服务器启动，端口3000"));
