@@ -62,4 +62,21 @@ function loadService() {
   return services;
 }
 
-module.exports = { loadRouter, loadController, loadService };
+const Sequelize = require("sequelize");
+
+function loadConfig(app) {
+  load("conf", (filename, conf) => {
+    if (conf.db) {
+      app.$db = new Sequelize(conf.db);
+
+      // 加载模型
+      app.$model = {};
+      load("model", (filename, { schema, options }) => {
+        app.$model = app.$db.define(filename, schema, options);
+      });
+      app.$db.sync();
+    }
+  });
+}
+
+module.exports = { loadRouter, loadController, loadService, loadConfig };
