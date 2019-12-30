@@ -6,7 +6,7 @@ module.exports = {
   "get /": async app => {
     // ctx.body = "用户首页";
     const name = await app.$service.user.getName();
-    app.ctx.body = "用户:" + name;
+    app.ctx.body = name;
   },
   // "get /info": async ctx => {
   //   ctx.body = "用户详情";

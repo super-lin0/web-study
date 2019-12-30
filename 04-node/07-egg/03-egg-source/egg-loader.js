@@ -53,10 +53,10 @@ function loadController(app) {
   return controllers;
 }
 
-function loadService() {
+function loadService(app) {
   const services = {};
   load("./service", (filename, service) => {
-    services[filename] = service;
+    services[filename] = service(app);
   });
 
   return services;
@@ -72,7 +72,7 @@ function loadConfig(app) {
       // 加载模型
       app.$model = {};
       load("model", (filename, { schema, options }) => {
-        app.$model = app.$db.define(filename, schema, options);
+        app.$model[filename] = app.$db.define(filename, schema, options);
       });
       app.$db.sync();
     }

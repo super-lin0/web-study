@@ -13,7 +13,7 @@ class Egg {
 
     loadConfig(this);
 
-    this.$service = loadService();
+    this.$service = loadService(this);
     this.$ctrl = loadController(this);
     this.$router = loadRouter(this);
     this.$app.use(this.$router.routes());
