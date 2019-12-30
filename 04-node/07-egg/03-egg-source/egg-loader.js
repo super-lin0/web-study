@@ -33,20 +33,33 @@ function loadRouter(app) {
       console.log(
         `映射地址，, ${method.toLocaleLowerCase()}, ${prefix}${path}`
       );
-      router[method](prefix + path, routes[key]);
+      // router[method](prefix + path, routes[key]);
+      router[method](prefix + path, async ctx => {
+        app.ctx = ctx;
+        await routes[key](app);
+      });
     });
   });
 
   return router;
 }
 
-function loadController() {
+function loadController(app) {
   const controllers = {};
   load("./controller", (filename, controller) => {
-    controllers[filename] = controller;
+    controllers[filename] = controller(app);
   });
 
   return controllers;
 }
 
-module.exports = { loadRouter, loadController };
+function loadService() {
+  const services = {};
+  load("./service", (filename, service) => {
+    services[filename] = service;
+  });
+
+  return services;
+}
+
+module.exports = { loadRouter, loadController, loadService };
