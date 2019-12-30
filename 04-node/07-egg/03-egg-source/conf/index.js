@@ -6,5 +6,6 @@ module.exports = {
     username: "root",
     password: "123",
     database: "demo"
-  }
+  },
+  middlewares: ["logger"]
 };

@@ -76,6 +76,13 @@ function loadConfig(app) {
       });
       app.$db.sync();
     }
+
+    if (conf.middlewares) {
+      conf.middlewares.forEach(mid => {
+        const midPath = path.resolve(__dirname, "middleware", mid);
+        app.$app.use(require(midPath));
+      });
+    }
   });
 }
 
