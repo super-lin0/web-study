@@ -86,4 +86,17 @@ function loadConfig(app) {
   });
 }
 
-module.exports = { loadRouter, loadController, loadService, loadConfig };
+const schedule = require("node-schedule");
+function loadSchedule() {
+  load("./schedule", (filename, scheduleCfg) => {
+    schedule.scheduleJob(scheduleCfg.interval, scheduleCfg.handler);
+  });
+}
+
+module.exports = {
+  loadRouter,
+  loadController,
+  loadService,
+  loadConfig,
+  loadSchedule
+};
