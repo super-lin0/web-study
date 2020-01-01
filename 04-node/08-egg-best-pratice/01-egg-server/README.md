@@ -1,4 +1,4 @@
-# egg-example
+# 01-egg-server
 
 
 

@@ -1,5 +1,5 @@
 {
-  "name": "egg-example",
+  "name": "01-egg-server",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -9,10 +9,7 @@
   "dependencies": {
     "egg": "^2.15.1",
     "egg-scripts": "^2.11.0",
-    "egg-sequelize": "^5.2.1",
-    "egg-swagger-doc-feat": "^2.2.13",
-    "mysql2": "^2.1.0",
-    "sequelize": "^5.21.3"
+    "egg-swagger-doc-feat": "^2.2.13"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -21,15 +18,14 @@
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
     "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0",
-    "sequelize-cli": "^5.5.1"
+    "eslint-config-egg": "^7.1.0"
   },
   "engines": {
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-egg-example",
-    "stop": "egg-scripts stop --title=egg-server-egg-example",
+    "start": "egg-scripts start --daemon --title=egg-server-01-egg-server",
+    "stop": "egg-scripts stop --title=egg-server-01-egg-server",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
@@ -37,8 +33,7 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod",
-    "sequelize": "sequelize --"
+    "autod": "autod"
   },
   "ci": {
     "version": "10"
