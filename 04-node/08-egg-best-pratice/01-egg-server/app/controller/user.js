@@ -19,8 +19,10 @@ class UserController extends Controller {
    */
   async create() {
     const { ctx } = this;
+    // ctx.body = "use ctrl888";
+    const res = { abc: 123 };
 
-    ctx.body = "use ctrl";
+    ctx.helper.success({ ctx, res });
   }
 }
 
