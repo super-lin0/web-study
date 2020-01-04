@@ -19,8 +19,15 @@ class UserController extends Controller {
    */
   async create() {
     const { ctx } = this;
-    // ctx.body = "use ctrl888";
-    const res = { abc: 123 };
+
+    //  参数校验
+    ctx.validate(ctx.rule.createUserRequest);
+
+    // 组装参数
+    const payload = ctx.request.body || {};
+
+    // 执行调用
+    const res = await ctx.service.user.create(payload);
 
     ctx.helper.success({ ctx, res });
   }
