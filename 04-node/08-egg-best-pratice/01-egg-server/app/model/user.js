@@ -2,6 +2,7 @@ module.exports = app => {
   const mongoose = app.mongoose;
 
   const UserSchema = new mongoose.Schema({
+    id: { type: String, primaryKey: true, autoIncrement: true },
     mobile: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     realName: { type: String, required: true },
