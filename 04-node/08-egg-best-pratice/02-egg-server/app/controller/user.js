@@ -20,7 +20,10 @@ class UserController extends Controller {
 
     // 校验参数
     ctx.validate(ctx.rule.createUserRequest);
-    const res = "use ctrl";
+
+    const payload = ctx.request.body || {};
+
+    const res = ctx.service.user.create(payload);
 
     ctx.helper.success({ ctx, res });
   }

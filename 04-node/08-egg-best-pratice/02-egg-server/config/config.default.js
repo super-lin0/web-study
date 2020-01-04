@@ -38,7 +38,7 @@ module.exports = appInfo => {
     enable: true
   };
 
-  consifg.mongoose = {
+  config.mongoose = {
     url: "mongodb://127.0.0.1:27017/test",
     options: {
       autoReconnect: true,
