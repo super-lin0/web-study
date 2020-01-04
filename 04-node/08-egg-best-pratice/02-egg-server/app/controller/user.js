@@ -17,7 +17,9 @@ class UserController extends Controller {
    */
   async create() {
     const { ctx } = this;
-    ctx.body = "use ctrl";
+    const res = "use ctrl";
+
+    ctx.helper.success({ ctx, res });
   }
 }
 
