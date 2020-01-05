@@ -3,6 +3,7 @@ import * as bodify from "koa-body";
 import * as serve from "koa-static";
 import * as timing from "koa-xtime";
 import { resolve } from "path";
+import { Sequelize } from "sequelize-typescript";
 
 import { load } from "./utils/route-decorator";
 
@@ -11,6 +12,17 @@ const app = new Koa();
 app.use(timing());
 
 app.use(serve(`${__dirname}/public`));
+
+const database = new Sequelize({
+  port: 3306,
+  database: "demo",
+  username: "root",
+  password: "123",
+  dialect: "mysql",
+  modelPaths: [`${__dirname}/model`]
+});
+
+database.sync({ force: true });
 
 app.use(
   bodify({
