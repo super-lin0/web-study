@@ -1,6 +1,7 @@
 import * as glob from "glob";
 import * as Koa from "koa";
 import * as KoaRouter from "koa-router";
+import { join } from "path";
 
 type HTTPMethod = "get" | "put" | "del" | "post" | "patch";
 
@@ -40,12 +41,9 @@ export const post = (path: string, options?: RouteOptions) => {
 };
 
 export const load = (folder: string, options: LoadOptoions = {}): KoaRouter => {
-  console.log("load::::::::::;");
+  const extname = options.extname || ".{js,ts}";
 
-  const extname = options.extname || ".{js, ts}";
-  glob.sync(require("path").join(folder, `./**/*${extname}`)).forEach(file => {
-    console.log("file:", file);
-
+  glob.sync(join(folder, `./**/*${extname}`)).forEach(file => {
     require(file);
   });
   return router;

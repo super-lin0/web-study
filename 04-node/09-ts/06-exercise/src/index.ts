@@ -20,6 +20,7 @@ app.use(
 );
 
 const router = load(resolve(__dirname, "./routes"));
+
 app.use(router.routes());
 
 app.listen(3000, () => console.log("服务器启动，端口3000"));
