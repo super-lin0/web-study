@@ -79,5 +79,13 @@ class UserService extends Service {
   async find(id) {
     return this.ctx.model.User.findById(id);
   }
+
+  /**
+   * 根据手机号查找用户信息
+   * @param {*} mobile
+   */
+  async findByMobile(mobile) {
+    return this.ctx.model.User.findOne({ mobile });
+  }
 }
 module.exports = UserService;

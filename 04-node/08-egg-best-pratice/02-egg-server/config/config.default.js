@@ -47,6 +47,12 @@ module.exports = appInfo => {
     }
   };
 
+  config.jwt = {
+    secret: "Great4-M",
+    enable: true,
+    match: /^\/api/
+  };
+
   return {
     ...config,
     ...userConfig
