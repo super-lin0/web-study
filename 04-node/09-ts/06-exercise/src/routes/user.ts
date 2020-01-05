@@ -1,11 +1,22 @@
 import * as Koa from "koa";
-import { get, post } from "../utils/route-decorator";
+import { get, post, middlewares } from "../utils/route-decorator";
 
 const users = [
   { name: "zhangsan", age: 18 },
   { name: "lisi", age: 20 }
 ];
 
+@middlewares([
+  async function guard(ctx: Koa.Context, next: () => Promise<any>) {
+    console.log("guard", ctx.header);
+
+    if (ctx.header.token) {
+      await next();
+    } else {
+      throw "请登录";
+    }
+  }
+])
 export default class User {
   @get("/users")
   public list(ctx: Koa.Context) {

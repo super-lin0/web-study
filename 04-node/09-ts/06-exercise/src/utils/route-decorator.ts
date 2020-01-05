@@ -33,17 +33,23 @@ export const decorate = (
   router: KoaRouter
 ) => {
   return (target, property) => {
-    const middlewares = [];
+    process.nextTick(() => {
+      const middlewares = [];
 
-    // 若设置了中间件选项则加入到中间件数组
-    if (options.middlewares) {
-      middlewares.push(...options.middlewares);
-    }
-    const url = options && options.prefix ? options.prefix + path : path;
+      if (target.middlewares) {
+        middlewares.push(...target.middlewares);
+      }
 
-    // 添加路由处理器
-    middlewares.push(target[property]);
-    router[methods](url, ...middlewares);
+      // 若设置了中间件选项则加入到中间件数组
+      if (options.middlewares) {
+        middlewares.push(...options.middlewares);
+      }
+      const url = options && options.prefix ? options.prefix + path : path;
+
+      // 添加路由处理器
+      middlewares.push(target[property]);
+      router[methods](url, ...middlewares);
+    });
   };
 };
 
@@ -55,6 +61,12 @@ export const post = method("post");
 export const del = method("del");
 export const put = method("put");
 export const patch = method("patch");
+
+export const middlewares = (middlewares: Koa.Middleware[]) => {
+  return target => {
+    target.prototype.middlewares = middlewares;
+  };
+};
 
 export const load = (folder: string, options: LoadOptoions = {}): KoaRouter => {
   const extname = options.extname || ".{js,ts}";
