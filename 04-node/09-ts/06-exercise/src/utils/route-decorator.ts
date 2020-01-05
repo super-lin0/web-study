@@ -26,12 +26,20 @@ type RouteOptions = {
 
 const router = new KoaRouter();
 
-export const method = methods => (path: string, options?: RouteOptions) => {
+export const decorate = (
+  methods,
+  path: string,
+  options: RouteOptions,
+  router: KoaRouter
+) => {
   return (target, property) => {
     const url = options && options.prefix ? options.prefix + path : path;
     router[methods](url, target[property]);
   };
 };
+
+export const method = methods => (path: string, options?: RouteOptions) =>
+  decorate(methods, path, options, router);
 
 export const get = method("get");
 export const post = method("post");
