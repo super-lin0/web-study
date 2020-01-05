@@ -1,0 +1,20 @@
+{
+  "name": "06-exercise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev ./src/index.ts -p tsconfig.json --no-cache",
+    "build": "tsc -p tsconfig.json && node ./dist/index.js",
+    "tslint": "tslint --fix -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^13.1.4",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
+}
