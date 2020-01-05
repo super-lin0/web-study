@@ -29,12 +29,21 @@ const router = new KoaRouter();
 export const decorate = (
   methods,
   path: string,
-  options: RouteOptions,
+  options: RouteOptions = {},
   router: KoaRouter
 ) => {
   return (target, property) => {
+    const middlewares = [];
+
+    // 若设置了中间件选项则加入到中间件数组
+    if (options.middlewares) {
+      middlewares.push(...options.middlewares);
+    }
     const url = options && options.prefix ? options.prefix + path : path;
-    router[methods](url, target[property]);
+
+    // 添加路由处理器
+    middlewares.push(target[property]);
+    router[methods](url, ...middlewares);
   };
 };
 
