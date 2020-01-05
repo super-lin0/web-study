@@ -26,19 +26,18 @@ type RouteOptions = {
 
 const router = new KoaRouter();
 
-export const get = (path: string, options?: RouteOptions) => {
+export const method = methods => (path: string, options?: RouteOptions) => {
   return (target, property) => {
     const url = options && options.prefix ? options.prefix + path : path;
-    router.get(url, target[property]);
+    router[methods](url, target[property]);
   };
 };
 
-export const post = (path: string, options?: RouteOptions) => {
-  return (target, property) => {
-    const url = options && options.prefix ? options.prefix + path : path;
-    router.post(url, target[property]);
-  };
-};
+export const get = method("get");
+export const post = method("post");
+export const del = method("del");
+export const put = method("put");
+export const patch = method("patch");
 
 export const load = (folder: string, options: LoadOptoions = {}): KoaRouter => {
   const extname = options.extname || ".{js,ts}";
