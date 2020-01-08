@@ -608,3 +608,13 @@ docker-compose up -d --force-recreate --build
 # docker run --name myapp -p 3000:3000  -d myapp:pm2
 ```
 
+
+
+## 十三、参考阅读
+
+1、[使用pm2+nginx部署koa2(https)](https://www.zhaofinger.com/detail/5)
+
+2、[详解 Node.Js 中实现端口重用原理](http://www.sohu.com/a/247732550_796914)
+
+3、[PM2控制台检测](https://id.keymetrics.io/api/oauth/login#/register)
+
