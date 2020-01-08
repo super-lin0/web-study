@@ -346,3 +346,168 @@ http://{url}:8000/
 ```
 
 ![](https://raw.githubusercontent.com/super-lin0/pic/master/img/20200107213005.png)
+
+
+
+## 九、构建前端应用
+
+**文件结构**
+
+<img src="https://raw.githubusercontent.com/super-lin0/pic/master/img/20200108075605.png" />
+
+- 安装deploy插件（主要用于将代码上传到服务器上）
+
+![](https://raw.githubusercontent.com/super-lin0/pic/master/img/20200108073136.png)
+
+```
+#.vscode/setting.json
+{
+  "deploy": {
+    "packages": [
+      {
+        "files": ["**/*"],
+
+        "exclude": [
+          "node_modules/**",
+          ".git/**",
+          ".vscode/**",
+          "**/node_modules/**"
+        ],
+        "deployOnSave": false	// 在保存时上传
+      }
+    ],
+    "targets": [
+      {
+        "type": "sftp",	// Linux默认文件上传方式
+        "name": "AliyunServer",
+        "dir": "/root/source/docker_ci",	// 服务器文件夹目标地址
+        "host": "xx.xx.xx.xx",	// 主机地址
+        "port": 22,	// 主机端口
+        "user": "zhngsan",	// 主机用户名
+        "privateKey": "/Users/xx/.ssh/xx.pem"	// 本机私钥地址
+      }
+    ]
+  }
+}
+
+```
+
+- 配置``nginx/conf.d/docker.conf``
+
+```
+server {
+    listen       80;
+    location / {
+        root   /var/www/html;
+        index  index.html index.htm;
+		}
+    location ~ \.(gif|jpg|png)$ {
+        root /static;
+        index index.html index.htm;
+    }
+}
+```
+
+- 配置 ``docker-compose.yml``
+
+```
+version: "3.1"
+services:
+  nginx:
+    restart: always
+    image: nginx
+    ports:
+      - 8091:80	// 将容器中的80端口映射到实体机的8091端口
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d		// 配置文件映射
+      - ./frontend/dist:/var/www/html/			// 将/var/.. 目录映射到实体机打包dist文件夹
+      - ./static/:/static/			// 静态文件映射
+```
+
+- 启动
+
+```
+docker-compose up
+```
+
+
+
+## 十、构建NodeJs
+
+- 配置``process.yml``
+
+```
+ apps:
+  - script : server.js
+    instances: 2
+    watch  : true
+    env    :
+      NODE_ENV: production
+```
+
+- 配置``.dockerignore``
+
+```
+node_modules
+```
+
+- 配置``Dockerfile``
+
+```
+FROM keymetrics/pm2:latest-alpine
+WORKDIR /usr/src/app
+ADD . /usr/src/app
+RUN npm config set registry https://registry.npm.taobao.org/ && \  
+    npm i
+# RUN npm i
+EXPOSE 3000
+#pm2在docker中使用命令为pm2-docker
+# CMD ["pm2-runtime", "start", "--json", "process.json"]
+CMD ["pm2-runtime", "start",  "process.yml"]
+```
+
+- 修改数据库配置
+
+```
+// conf.js
+module.exports = {
+    url: "mongodb://mongo:27017",
+    dbName: 'taro',
+}
+```
+
+- 修改 ``nginx/conf.d/conf``
+
+```
+    location /api {
+            proxy_pass  http://app-pm2:3000;
+            proxy_redirect     off;
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    }
+```
+
+- 修改 ``docker-compose``文件
+
+```
+version: "3.1"
+services:
+  app-pm2:
+    container_name: app-pm2
+    #构建容器
+    build: ./backend
+    ports:
+      - "3000:3000"
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+```
+
