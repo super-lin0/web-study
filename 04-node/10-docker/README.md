@@ -511,3 +511,100 @@ services:
       - 8081:8081
 ```
 
+
+
+## 十一、Webhook
+
+- 新建一个Webhooks
+
+  [一个简单的例子学会github repository的webhook](https://www.jianshu.com/p/7cbda59a191f)
+
+- Webhook.js
+
+```
+var http = require('http')
+var createHandler = require('github-webhook-handler')
+var handler = createHandler({ path: '/webhooks', secret: 'myHashSecret' })
+// 上面的 secret 保持和 GitHub 后台设置的一致
+
+function run_cmd(cmd, args, callback) {
+    var spawn = require('child_process').spawn;
+    var child = spawn(cmd, args);
+    var resp = "";
+
+    child.stdout.on('data', function (buffer) { resp += buffer.toString(); });
+    child.stdout.on('end', function () { callback(resp) });
+}
+// debug用
+// run_cmd('sh', ['./deploy-dev.sh'], function(text){ console.log(text) });
+
+http.createServer(function (req, res) {
+
+    handler(req, res, function (err) {
+        res.statusCode = 404
+        res.end('no such location')
+    })
+}).listen(7777,() =>{
+    console.log('WebHooks Listern at 7777');
+})
+
+handler.on('error', function (err) {
+    console.error('Error:', err.message)
+})
+
+
+handler.on('*', function (event) {
+    console.log('Received *', event.payload.action);
+    //   run_cmd('sh', ['./deploy-dev.sh'], function(text){ console.log(text) });
+})
+ 
+handler.on('push', function (event) {
+    console.log('Received a push event for %s to %s',
+        event.payload.repository.name,
+        event.payload.ref);
+        // 分支判断
+        if(event.payload.ref === 'refs/heads/master'){
+            console.log('deploy master..')
+            run_cmd('sh', ['./deploy-dev.sh'], function(text){ console.log(text) });
+
+        }
+})
+
+
+handler.on('issues', function (event) {
+    console.log('Received an issue event for % action=%s: #%d %s',
+        event.payload.repository.name,
+        event.payload.action,
+        event.payload.issue.number,
+        event.payload.issue.title)
+})
+
+
+```
+
+
+
+## 十二、实现持续集成
+
+```
+# deploy-dev.sh
+echo Deploy Project
+# docker-compose up -d --force-recreate --build
+
+# 获取最新版代码
+git pull
+
+# 强制重新编译容器
+docker-compose down
+docker-compose up -d --force-recreate --build
+
+
+# 定制镜像
+# docker build -t myapp:pm2 ./backend
+
+# 重启启动容器
+# docker stop myapp
+# docker rm myapp
+# docker run --name myapp -p 3000:3000  -d myapp:pm2
+```
+
