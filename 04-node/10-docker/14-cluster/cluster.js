@@ -1,8 +1,8 @@
 const cluster = require("cluster");
 const os = require("os");
-const numCPUs = os.cpus().length;
-
 const process = require("process");
+
+const numCPUs = os.cpus().length;
 
 // 存储进程
 const workers = {};
@@ -18,7 +18,7 @@ if (cluster.isMaster) {
   });
 
   console.log("numCPUs:", numCPUs);
-  for (let i = 0; i < numCPUs.length; i++) {
+  for (let i = 0; i < numCPUs; i++) {
     const worker = cluster.fork();
     console.log("init .... pid", worker.process.pid);
     workers[worker.process.pid] = worker;
@@ -30,6 +30,7 @@ if (cluster.isMaster) {
 
 // 手动执行exit(Ctrl + C),
 process.on("SIGTERM", () => {
+  console.log("process exit");
   for (let pid in workers) {
     process.kill(pid);
   }
