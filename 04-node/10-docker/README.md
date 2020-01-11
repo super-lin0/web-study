@@ -1,3 +1,5 @@
+
+
 # Docker
 
 
@@ -41,7 +43,7 @@
 
 
 
-```
+```shell
  # apt升级
 sudo apt-get update
 
@@ -86,7 +88,7 @@ docker run hello-world
 - [阿里云加速器(需登录账号获取)](https://cr.console.aliyun.com/)
 - [七牛云加速器](https://reg-mirror.qiniu.com)
 
-```
+```shell
 # /etc/docker/daemon.json
 {
   "registry-mirrors": [
@@ -103,7 +105,7 @@ sudo systemctl restart docker
 
 ## 三、简单Nginx服务
 
-```
+```shell
 # 拉取官方镜像 - 面向docker的只读模板 
 docker pull nginx
 
@@ -162,13 +164,13 @@ docker rm ff6
 
 - 定制自己的Web服务器
 
-```
+```dockerfile
 #Dockerfile
 FROM nginx:latest
 RUN echo '<h1>Hello, Kaikeba!</h1>' > /usr/share/nginx/html/index.html
 ```
 
-```
+```shell
 # 定制镜像
 docker build -t nginx:kaikeba .
 # 运行
@@ -181,12 +183,12 @@ docker run -p 80:80 nginx:kaikeba
 
 - 定制一个程序NodeJS镜像
 
-```
+```shell
 npm init -y
 npm i koa -s
 ```
 
-```
+```json
  // package.json
 {
   "name": "myappp",
@@ -205,7 +207,7 @@ npm i koa -s
 }
 ```
 
-```
+```javascript
  // app.js
 const Koa = require('koa')
 const app = new Koa()
@@ -217,7 +219,7 @@ app.listen(3000, () => {
 })
 ```
 
-```
+```dockerfile
 #Dockerfile
 
 #制定node镜像的版本
@@ -239,7 +241,7 @@ EXPOSE 3000
 CMD ["node", "app.js"]
 ```
 
-```
+```shell
 # 定制镜像
 docker build -t mynode .
 
@@ -253,12 +255,39 @@ docker run -p 3000:3000 -d mynode
 
 PM2-利用多核资源
 
+- 内建负载均衡（使用Node cluster集群模块、子进程，可以参考朴灵的《深入浅出node.js》一书第九章）
+- 线程守护，keep alive
+- 0秒停机重载，维护升级的时候不需要停机
+- 现在``Linux(stable) && Mac OSX(stable) && windows(stable)`` 多平台支持
+- 停止不稳定的进程（避免无限循环）
+- 控制台检测  https://id.keymetrics.io/api/oauth/login#/register
+- 提供 ``HTTP API``
+
+**配置**
+
+```shell
+npm install -g pm2
+pm2 start app.js --watch -i 2 // watch 监听文件变化 -i 启动多少个实例
+
+pm2 stop all
+pm2 list
+pm2 start app.js -i max # 根据机器CPU核数，开启对应数目的进程
 ```
+
+**pm2配置开机启动**
+
+```
+pm2 startup
+```
+
+```javascript
 # .dockerignore
 node_modules
 ```
 
-```
+**定制PM2镜像**
+
+```yml
  // process.yml
 apps:
   - script : app.js
@@ -269,7 +298,7 @@ apps:
  
 ```
 
-```
+```dockerfile
 # Dockerfile
 FROM keymetrics/pm2:latest-alpine
 WORKDIR /usr/src/app
@@ -282,7 +311,7 @@ EXPOSE 3000
 CMD ["pm2-runtime", "start", "process.yml"]
 ```
 
-```
+```shell
  # 定制镜像
 docker build -t mypm2 .
 
@@ -290,18 +319,20 @@ docker build -t mypm2 .
 docker run -p 3000:3000 -d mypm2
 ```
 
+
+
 ## 八、Compose
 
 **简介**
 
 Compose项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。
 
-```
+```shell
 #安装
 apt install docker-compose
 ```
 
-```
+```shell
 mkdir hello-world && cd $_
 
 vi helloword-compose.yml
@@ -313,13 +344,13 @@ services:
 		image: hello-world
 ```
 
-```
+```shell
 docker-compose up
 ```
 
 - 使用docker安装``mongo``l以及``mongo-express``
 
-```
+```shell
 mkdir mongo && cd $_
 vi docker-compose.yml
 
@@ -359,7 +390,7 @@ http://{url}:8000/
 
 ![](https://raw.githubusercontent.com/super-lin0/pic/master/img/20200108073136.png)
 
-```
+```json
 #.vscode/setting.json
 {
   "deploy": {
@@ -394,7 +425,7 @@ http://{url}:8000/
 
 - 配置``nginx/conf.d/docker.conf``
 
-```
+```nginx
 server {
     listen       80;
     location / {
@@ -410,7 +441,7 @@ server {
 
 - 配置 ``docker-compose.yml``
 
-```
+```yaml
 version: "3.1"
 services:
   nginx:
@@ -426,7 +457,7 @@ services:
 
 - 启动
 
-```
+```shell
 docker-compose up
 ```
 
@@ -436,7 +467,7 @@ docker-compose up
 
 - 配置``process.yml``
 
-```
+```yaml
  apps:
   - script : server.js
     instances: 2
@@ -453,7 +484,7 @@ node_modules
 
 - 配置``Dockerfile``
 
-```
+```dockerfile
 FROM keymetrics/pm2:latest-alpine
 WORKDIR /usr/src/app
 ADD . /usr/src/app
@@ -468,7 +499,7 @@ CMD ["pm2-runtime", "start",  "process.yml"]
 
 - 修改数据库配置
 
-```
+```javascript
 // conf.js
 module.exports = {
     url: "mongodb://mongo:27017",
@@ -478,7 +509,7 @@ module.exports = {
 
 - 修改 ``nginx/conf.d/conf``
 
-```
+```nginx
     location /api {
             proxy_pass  http://app-pm2:3000;
             proxy_redirect     off;
@@ -490,7 +521,7 @@ module.exports = {
 
 - 修改 ``docker-compose``文件
 
-```
+```dockerfile
 version: "3.1"
 services:
   app-pm2:
@@ -521,7 +552,7 @@ services:
 
 - Webhook.js
 
-```
+```javascript
 var http = require('http')
 var createHandler = require('github-webhook-handler')
 var handler = createHandler({ path: '/webhooks', secret: 'myHashSecret' })
@@ -586,7 +617,7 @@ handler.on('issues', function (event) {
 
 ## 十二、实现持续集成
 
-```
+```sh
 # deploy-dev.sh
 echo Deploy Project
 # docker-compose up -d --force-recreate --build

@@ -1,0 +1,17 @@
+{
+  "name": "14-cluster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cluster": "^0.7.7",
+    "process": "^0.11.10",
+    "request": "^2.88.0"
+  }
+}
