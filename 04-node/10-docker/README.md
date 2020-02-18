@@ -391,7 +391,7 @@ http://{url}:8000/
 ![](https://raw.githubusercontent.com/super-lin0/pic/master/img/20200108073136.png)
 
 ```json
-#.vscode/setting.json
+#.vscode/settings.json
 {
   "deploy": {
     "packages": [
