@@ -22,12 +22,12 @@ class VueRouter {
   }
 
   onhashchange() {
-    this.current = window.location.hash.slice(1);
+    this.current = window.location.hash.slice(1) || "/";
   }
 }
 
 // 参数一是Vue.use调用时传入的
-VueRouter.install = (_Vue) => {
+VueRouter.install = _Vue => {
   Vue = _Vue;
 
   // 1、挂载$router属性
@@ -40,7 +40,7 @@ VueRouter.install = (_Vue) => {
       if (this.$options.router) {
         Vue.prototype.$router = this.$options.router;
       }
-    },
+    }
   });
 
   // 注册并且实现两个组件:router-view,router-link
@@ -48,20 +48,20 @@ VueRouter.install = (_Vue) => {
     props: {
       to: {
         type: String,
-        required: true,
-      },
+        required: true
+      }
     },
     render(h) {
       return h(
         "a",
         {
           attrs: {
-            href: `#${this.to}`,
-          },
+            href: `#${this.to}`
+          }
         },
         this.$slots.default
       );
-    },
+    }
   });
 
   Vue.component("router-view", {
@@ -70,7 +70,7 @@ VueRouter.install = (_Vue) => {
       // 获取当前路由所对应的组件
       const current = this.$router.current;
       const route = this.$router.$options.routes.find(
-        (route) => route.path === current
+        route => route.path === current
       );
 
       if (route) {
@@ -78,7 +78,7 @@ VueRouter.install = (_Vue) => {
       }
 
       return h(component);
-    },
+    }
   });
 };
 
