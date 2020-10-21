@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<div id="app">
+  <p @click="onClick">{{counter}}</p>
+  <p>{{counter}}</p>
+  <p k-text="counter"></p>
+  <p k-html="desc"></p>
+  <input type="text" k-model="desc" />
+</div>
+
+<script src="./vue.js"></script>
+
+<script>
+  const app = new Vue({
+    el: "#app",
+    data: {
+      counter: 1,
+      desc: "<span style='color:red'>你好，世界</span>",
+    },
+    methods: {
+      onClick() {
+        this.counter++;
+      },
+    },
+  });
+
+  setInterval(() => {
+    app.counter++;
+  }, 1000);
+</script>
